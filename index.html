@@ -1,0 +1,1637 @@
+<<<<<<< HEAD
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    .dashboard-transition {
+      transition: all 0.3s ease-in-out;
+    }
+    
+    .progress-bar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      border-radius: 9999px;
+      transition: width 0.5s ease-in-out;
+    }
+    
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    @media (min-width: 1024px) {
+      .lg\:dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <div class="min-h-screen flex">
+    <!-- Mobile Sidebar Overlay -->
+    <div id="mobileOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden"></div>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="fixed left-0 top-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 -translate-x-full lg:translate-x-0 lg:static lg:h-screen dashboard-transition">
+      <div class="p-6 border-b border-gray-200">
+        <div class="flex items-center justify-between">
+          <h1 class="text-xl font-bold text-gray-900">UN SKILLS</h1>
+          <button id="closeSidebar" class="lg:hidden p-1 rounded-lg hover:bg-gray-100">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div class="mt-4 flex items-center space-x-3">
+          <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
+            A
+          </div>
+          <div>
+            <p class="font-medium text-gray-900">Amar Deka</p>
+            <p class="text-sm text-gray-600">Student</p>
+          </div>
+        </div>
+      </div>
+
+      <nav class="p-4 space-y-2">
+        <button data-tab="overview" class="w-full flex items-center justify-between px-4 py-3 rounded-lg transition-colors bg-blue-500 text-white nav-item">
+          <div class="flex items-center space-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 3v18h18"></path>
+              <path d="M19 9V3h-6"></path>
+              <path d="M15 15V3H9"></path>
+              <path d="M9 21H3V9"></path>
+            </svg>
+            <span class="font-medium">Overview</span>
+          </div>
+        </button>
+        
+        <button data-tab="courses" class="w-full flex items-center justify-between px-4 py-3 rounded-lg transition-colors text-gray-600 hover:bg-gray-100 nav-item">
+          <div class="flex items-center space-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            <span class="font-medium">My Courses</span>
+          </div>
+          <span class="px-2 py-1 rounded-full text-xs bg-gray-200 text-gray-600">4</span>
+        </button>
+        
+        <button data-tab="tasks" class="w-full flex items-center justify-between px-4 py-3 rounded-lg transition-colors text-gray-600 hover:bg-gray-100 nav-item">
+          <div class="flex items-center space-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span class="font-medium">Today's Tasks</span>
+          </div>
+          <span class="px-2 py-1 rounded-full text-xs bg-gray-200 text-gray-600">3</span>
+        </button>
+        
+        <button data-tab="assignments" class="w-full flex items-center justify-between px-4 py-3 rounded-lg transition-colors text-gray-600 hover:bg-gray-100 nav-item">
+          <div class="flex items-center space-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            <span class="font-medium">Assignments</span>
+          </div>
+          <span class="px-2 py-1 rounded-full text-xs bg-gray-200 text-gray-600">2</span>
+        </button>
+        
+        <button data-tab="performance" class="w-full flex items-center justify-between px-4 py-3 rounded-lg transition-colors text-gray-600 hover:bg-gray-100 nav-item">
+          <div class="flex items-center space-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+            <span class="font-medium">Performance</span>
+          </div>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="lg:ml-64 flex-1">
+      <!-- Header -->
+      <header class="bg-white border-b border-gray-200 px-6 py-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-4">
+            <button id="openSidebar" class="lg:hidden p-2 rounded-lg hover:bg-gray-100">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+              </svg>
+            </button>
+            <div>
+              <h2 id="headerTitle" class="text-xl font-semibold text-gray-900">Dashboard Overview</h2>
+              <p id="currentDate" class="text-sm text-gray-600">Wednesday, January 1, 2025</p>
+            </div>
+          </div>
+          
+          <div class="flex items-center space-x-4">
+            <div class="relative hidden md:block">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input
+                type="text"
+                placeholder="Search courses, assignments..."
+                class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            <button class="relative p-2 rounded-lg hover:bg-gray-100">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+              <span class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">3</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <main class="p-6">
+        <!-- Overview Tab Content -->
+        <div id="overviewContent" class="space-y-6 tab-content">
+          <!-- Stats Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Active Courses Card -->
+            <div class="bg-white rounded-xl p-6 border border-gray-200">
+              <div class="flex items-center justify-between mb-4">
+                <div class="p-3 rounded-lg bg-blue-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                  </svg>
+                </div>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-1">4</h3>
+              <p class="text-sm text-gray-600">Active Courses</p>
+            </div>
+            
+            <!-- Completion Rate Card -->
+            <div class="bg-white rounded-xl p-6 border border-gray-200">
+              <div class="flex items-center justify-between mb-4">
+                <div class="p-3 rounded-lg bg-green-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M16 8s-4-4-8-4-8 4-8 4"></path>
+                  </svg>
+                </div>
+                <span class="text-sm font-medium text-green-600">+5%</span>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-1">68%</h3>
+              <p class="text-sm text-gray-600">Completion Rate</p>
+            </div>
+            
+            <!-- Learning Hours Card -->
+            <div class="bg-white rounded-xl p-6 border border-gray-200">
+              <div class="flex items-center justify-between mb-4">
+                <div class="p-3 rounded-lg bg-purple-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 15 15"></polyline>
+                  </svg>
+                </div>
+                <span class="text-sm font-medium text-green-600">+12%</span>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-1">142</h3>
+              <p class="text-sm text-gray-600">Learning Hours</p>
+            </div>
+            
+            <!-- Certificates Card -->
+            <div class="bg-white rounded-xl p-6 border border-gray-200">
+              <div class="flex items-center justify-between mb-4">
+                <div class="p-3 rounded-lg bg-orange-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
+                    <circle cx="12" cy="8" r="7"></circle>
+                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                  </svg>
+                </div>
+                <span class="text-sm font-medium text-green-600">+1%</span>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-1">3</h3>
+              <p class="text-sm text-gray-600">Certificates</p>
+            </div>
+          </div>
+
+          <!-- Quick Actions & Recent Activity -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2">
+              <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Courses</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Course Card 1 -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                  <div class="flex items-start justify-between mb-4">
+                    <div class="flex-1">
+                      <h3 class="font-semibold text-gray-900 mb-1">React.js Development</h3>
+                      <p class="text-sm text-gray-600">by Dr. Sarah Chen</p>
+                    </div>
+                    <div class="w-3 h-3 rounded-full bg-blue-500"></div>
+                  </div>
+                  
+                  <div class="mb-4">
+                    <div class="flex justify-between text-sm text-gray-600 mb-2">
+                      <span>18/24 lessons</span>
+                      <span>75%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                      <div class="h-2 rounded-full bg-blue-500" style="width: 75%"></div>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <p class="text-xs text-gray-500 mb-1">Next:</p>
+                      <p class="text-sm font-medium text-gray-900">State Management with Redux</p>
+                    </div>
+                    <button class="flex items-center space-x-1 bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                      </svg>
+                      <span class="text-sm">Continue</span>
+                    </button>
+                  </div>
+                </div>
+                
+                <!-- Course Card 2 -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                  <div class="flex items-start justify-between mb-4">
+                    <div class="flex-1">
+                      <h3 class="font-semibold text-gray-900 mb-1">Data Structures & Algorithms</h3>
+                      <p class="text-sm text-gray-600">by Prof. Michael Johnson</p>
+                    </div>
+                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                  </div>
+                  
+                  <div class="mb-4">
+                    <div class="flex justify-between text-sm text-gray-600 mb-2">
+                      <span>13/30 lessons</span>
+                      <span>45%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                      <div class="h-2 rounded-full bg-green-500" style="width: 45%"></div>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <p class="text-xs text-gray-500 mb-1">Next:</p>
+                      <p class="text-sm font-medium text-gray-900">Binary Search Trees</p>
+                    </div>
+                    <button class="flex items-center space-x-1 bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                      </svg>
+                      <span class="text-sm">Continue</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="">
+              <h3 class="text-lg font-semibold text-gray-900 mb-4">Upcoming Tasks</h3>
+              <div class="space-y-3">
+                <!-- Task Item 1 -->
+                <div class="flex items-center space-x-4 p-4 bg-white rounded-lg border border-gray-200 hover:shadow-sm transition-shadow">
+                  <div class="p-2 rounded-lg text-blue-600 bg-blue-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                  </div>
+                  <div class="flex-1">
+                    <h4 class="font-medium text-gray-900">Live Session: Advanced React Hooks</h4>
+                    <p class="text-sm text-gray-600">React.js Development</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-sm font-medium text-gray-900">10:00 AM</p>
+                    <span class="inline-block px-2 py-1 rounded-full text-xs font-medium text-blue-600 bg-blue-100">upcoming</span>
+                  </div>
+                </div>
+                
+                <!-- Task Item 2 -->
+                <div class="flex items-center space-x-4 p-4 bg-white rounded-lg border border-gray-200 hover:shadow-sm transition-shadow">
+                  <div class="p-2 rounded-lg text-orange-600 bg-orange-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                      <line x1="16" y1="13" x2="8" y2="13"></line>
+                      <line x1="16" y1="17" x2="8" y2="17"></line>
+                      <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                  </div>
+                  <div class="flex-1">
+                    <h4 class="font-medium text-gray-900">Build a Todo App Component</h4>
+                    <p class="text-sm text-gray-600">React.js Development</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-sm font-medium text-gray-900">11:59 PM</p>
+                    <span class="inline-block px-2 py-1 rounded-full text-xs font-medium text-orange-600 bg-orange-100">pending</span>
+                  </div>
+                </div>
+                
+                <!-- Task Item 3 -->
+                <div class="flex items-center space-x-4 p-4 bg-white rounded-lg border border-gray-200 hover:shadow-sm transition-shadow">
+                  <div class="p-2 rounded-lg text-orange-600 bg-orange-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <path d="M16 8s-4-4-8-4-8 4-8 4"></path>
+                    </svg>
+                  </div>
+                  <div class="flex-1">
+                    <h4 class="font-medium text-gray-900">Arrays and Linked Lists Quiz</h4>
+                    <p class="text-sm text-gray-600">Data Structures & Algorithms</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-sm font-medium text-gray-900">6:00 PM</p>
+                    <span class="inline-block px-2 py-1 rounded-full text-xs font-medium text-orange-600 bg-orange-100">pending</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Courses Tab Content -->
+        <div id="coursesContent" class="grid grid-cols-1 md:grid-cols-2 gap-6 tab-content hidden">
+          <!-- Course Card 1 -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex-1">
+                <h3 class="font-semibold text-gray-900 mb-1">React.js Development</h3>
+                <p class="text-sm text-gray-600">by Dr. Sarah Chen</p>
+              </div>
+              <div class="w-3 h-3 rounded-full bg-blue-500"></div>
+            </div>
+            
+            <div class="mb-4">
+              <div class="flex justify-between text-sm text-gray-600 mb-2">
+                <span>18/24 lessons</span>
+                <span>75%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="h-2 rounded-full bg-blue-500" style="width: 75%"></div>
+              </div>
+            </div>
+            
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-xs text-gray-500 mb-1">Next:</p>
+                <p class="text-sm font-medium text-gray-900">State Management with Redux</p>
+              </div>
+              <button class="flex items-center space-x-1 bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span class="text-sm">Continue</span>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Course Card 2 -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex-1">
+                <h3 class="font-semibold text-gray-900 mb-1">Data Structures & Algorithms</h3>
+                <p class="text-sm text-gray-600">by Prof. Michael Johnson</p>
+              </div>
+              <div class="w-3 h-3 rounded-full bg-green-500"></div>
+            </div>
+            
+            <div class="mb-4">
+              <div class="flex justify-between text-sm text-gray-600 mb-2">
+                <span>13/30 lessons</span>
+                <span>45%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="h-2 rounded-full bg-green-500" style="width: 45%"></div>
+              </div>
+            </div>
+            
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-xs text-gray-500 mb-1">Next:</p>
+                <p class="text-sm font-medium text-gray-900">Binary Search Trees</p>
+              </div>
+              <button class="flex items-center space-x-1 bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span class="text-sm">Continue</span>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Course Card 3 -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex-1">
+                <h3 class="font-semibold text-gray-900 mb-1">UI/UX Design Principles</h3>
+                <p class="text-sm text-gray-600">by Emma Rodriguez</p>
+              </div>
+              <div class="w-3 h-3 rounded-full bg-purple-500"></div>
+            </div>
+            
+            <div class="mb-4">
+              <div class="flex justify-between text-sm text-gray-600 mb-2">
+                <span>14/16 lessons</span>
+                <span>90%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="h-2 rounded-full bg-purple-500" style="width: 90%"></div>
+              </div>
+            </div>
+            
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-xs text-gray-500 mb-1">Next:</p>
+                <p class="text-sm font-medium text-gray-900">Design Systems</p>
+              </div>
+              <button class="flex items-center space-x-1 bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span class="text-sm">Continue</span>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Course Card 4 -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex-1">
+                <h3 class="font-semibold text-gray-900 mb-1">Machine Learning Basics</h3>
+                <p class="text-sm text-gray-600">by Dr. Raj Patel</p>
+              </div>
+              <div class="w-3 h-3 rounded-full bg-orange-500"></div>
+            </div>
+            
+            <div class="mb-4">
+              <div class="flex justify-between text-sm text-gray-600 mb-2">
+                <span>8/28 lessons</span>
+                <span>30%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="h-2 rounded-full bg-orange-500" style="width: 30%"></div>
+              </div>
+            </div>
+            
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-xs text-gray-500 mb-1">Next:</p>
+                <p class="text-sm font-medium text-gray-900">Linear Regression</p>
+              </div>
+              <button class="flex items-center space-x-1 bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span class="text-sm">Continue</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tasks Tab Content -->
+        <div id="tasksContent" class="space-y-4 tab-content hidden">
+          <!-- Task Item 1 -->
+          <div class="flex items-center space-x-4 p-4 bg-white rounded-lg border border-gray-200 hover:shadow-sm transition-shadow">
+            <div class="p-2 rounded-lg text-blue-600 bg-blue-100">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-medium text-gray-900">Live Session: Advanced React Hooks</h4>
+              <p class="text-sm text-gray-600">React.js Development</p>
+            </div>
+            <div class="text-right">
+              <p class="text-sm font-medium text-gray-900">10:00 AM</p>
+              <span class="inline-block px-2 py-1 rounded-full text-xs font-medium text-blue-600 bg-blue-100">upcoming</span>
+            </div>
+          </div>
+          
+          <!-- Task Item 2 -->
+          <div class="flex items-center space-x-4 p-4 bg-white rounded-lg border border-gray-200 hover:shadow-sm transition-shadow">
+            <div class="p-2 rounded-lg text-orange-600 bg-orange-100">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-medium text-gray-900">Build a Todo App Component</h4>
+              <p class="text-sm text-gray-600">React.js Development</p>
+            </div>
+            <div class="text-right">
+              <p class="text-sm font-medium text-gray-900">11:59 PM</p>
+              <span class="inline-block px-2 py-1 rounded-full text-xs font-medium text-orange-600 bg-orange-100">pending</span>
+            </div>
+          </div>
+          
+          <!-- Task Item 3 -->
+          <div class="flex items-center space-x-4 p-4 bg-white rounded-lg border border-gray-200 hover:shadow-sm transition-shadow">
+            <div class="p-2 rounded-lg text-orange-600 bg-orange-100">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M16 8s-4-4-8-4-8 4-8 4"></path>
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-medium text-gray-900">Arrays and Linked Lists Quiz</h4>
+              <p class="text-sm text-gray-600">Data Structures & Algorithms</p>
+            </div>
+            <div class="text-right">
+              <p class="text-sm font-medium text-gray-900">6:00 PM</p>
+              <span class="inline-block px-2 py-1 rounded-full text-xs font-medium text-orange-600 bg-orange-100">pending</span>
+            </div>
+          </div>
+          
+          <!-- Task Item 4 -->
+          <div class="flex items-center space-x-4 p-4 bg-white rounded-lg border border-gray-200 hover:shadow-sm transition-shadow">
+            <div class="p-2 rounded-lg text-green-600 bg-green-100">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-medium text-gray-900">Design Critique Session</h4>
+              <p class="text-sm text-gray-600">UI/UX Design Principles</p>
+            </div>
+            <div class="text-right">
+              <p class="text-sm font-medium text-gray-900">2:00 PM</p>
+              <span class="inline-block px-2 py-1 rounded-full text-xs font-medium text-green-600 bg-green-100">completed</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Assignments Tab Content -->
+        <div id="assignmentsContent" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 tab-content hidden">
+          <!-- Assignment Card 1 -->
+          <div class="bg-white rounded-lg border border-gray-200 p-4">
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h4 class="font-medium text-gray-900">E-commerce Website Design</h4>
+                <p class="text-sm text-gray-600">UI/UX Design Principles</p>
+              </div>
+              <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">submitted</span>
+            </div>
+            
+            <div class="flex items-center justify-between">
+              <div class="text-sm text-gray-600">
+                Due: 7/5/2025
+              </div>
+              <div class="font-semibold text-green-600">A-</div>
+            </div>
+          </div>
+          
+          <!-- Assignment Card 2 -->
+          <div class="bg-white rounded-lg border border-gray-200 p-4">
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h4 class="font-medium text-gray-900">Sorting Algorithm Implementation</h4>
+                <p class="text-sm text-gray-600">Data Structures & Algorithms</p>
+              </div>
+              <span class="px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-700">pending</span>
+            </div>
+            
+            <div class="flex items-center justify-between">
+              <div class="text-sm text-gray-600">
+                Due: 7/3/2025
+              </div>
+              <button class="flex items-center space-x-1 text-blue-600 hover:text-blue-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <span class="text-sm">Submit</span>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Assignment Card 3 -->
+          <div class="bg-white rounded-lg border border-gray-200 p-4">
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h4 class="font-medium text-gray-900">React Portfolio Project</h4>
+                <p class="text-sm text-gray-600">React.js Development</p>
+              </div>
+              <span class="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">in-progress</span>
+            </div>
+            
+            <div class="flex items-center justify-between">
+              <div class="text-sm text-gray-600">
+                Due: 7/8/2025
+              </div>
+              <button class="flex items-center space-x-1 text-blue-600 hover:text-blue-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <span class="text-sm">Submit</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Performance Tab Content -->
+        <div id="performanceContent" class="space-y-6 tab-content hidden">
+          <!-- Performance Stats -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white rounded-xl p-6 border border-gray-200 text-center">
+              <div class="text-3xl font-bold text-blue-600 mb-2">B+</div>
+              <p class="text-gray-600">Overall Grade</p>
+            </div>
+            <div class="bg-white rounded-xl p-6 border border-gray-200 text-center">
+              <div class="text-3xl font-bold text-green-600 mb-2">12</div>
+              <p class="text-gray-600">Day Streak</p>
+            </div>
+            <div class="bg-white rounded-xl p-6 border border-gray-200 text-center">
+              <div class="text-3xl font-bold text-purple-600 mb-2">142</div>
+              <p class="text-gray-600">Total Hours</p>
+            </div>
+          </div>
+
+          <!-- Achievements -->
+          <div class="bg-white rounded-xl p-6 border border-gray-200">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Achievements</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg">
+                <div class="text-2xl">⚡</div>
+                <div>
+                  <h4 class="font-medium text-gray-900">Quick Learner</h4>
+                  <p class="text-sm text-gray-600">Completed 5 lessons in a day</p>
+                </div>
+              </div>
+              
+              <div class="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg">
+                <div class="text-2xl">🔥</div>
+                <div>
+                  <h4 class="font-medium text-gray-900">Consistent Student</h4>
+                  <p class="text-sm text-gray-600">7-day learning streak</p>
+                </div>
+              </div>
+              
+              <div class="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg">
+                <div class="text-2xl">🏆</div>
+                <div>
+                  <h4 class="font-medium text-gray-900">Top Performer</h4>
+                  <p class="text-sm text-gray-600">Scored 95%+ on 3 quizzes</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Update current date
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', options);
+      
+      // Tab switching functionality
+      const navItems = document.querySelectorAll('.nav-item');
+      const tabContents = document.querySelectorAll('.tab-content');
+      
+      navItems.forEach(item => {
+        item.addEventListener('click', function() {
+          const tabKey = this.getAttribute('data-tab');
+          
+          // Update active tab styling
+          navItems.forEach(navItem => {
+            if (navItem.getAttribute('data-tab') === tabKey) {
+              navItem.classList.remove('text-gray-600', 'hover:bg-gray-100');
+              navItem.classList.add('bg-blue-500', 'text-white');
+            } else {
+              navItem.classList.remove('bg-blue-500', 'text-white');
+              navItem.classList.add('text-gray-600', 'hover:bg-gray-100');
+            }
+          });
+          
+          // Show/hide tab content
+          tabContents.forEach(content => {
+            if (content.id === `${tabKey}Content`) {
+              content.classList.remove('hidden');
+            } else {
+              content.classList.add('hidden');
+            }
+          });
+          
+          // Update header title
+          let titleText = '';
+          switch(tabKey) {
+            case 'overview':
+              titleText = 'Dashboard Overview';
+              break;
+            case 'courses':
+              titleText = 'My Courses';
+              break;
+            case 'tasks':
+              titleText = "Today's Tasks";
+              break;
+            case 'assignments':
+              titleText = 'Assignments';
+              break;
+            case 'performance':
+              titleText = 'Performance Analytics';
+              break;
+          }
+          document.getElementById('headerTitle').textContent = titleText;
+        });
+      });
+      
+      // Mobile sidebar toggle
+      const mobileOverlay = document.getElementById('mobileOverlay');
+      const sidebar = document.getElementById('sidebar');
+      const openSidebarBtn = document.getElementById('openSidebar');
+      const closeSidebarBtn = document.getElementById('closeSidebar');
+      
+      openSidebarBtn.addEventListener('click', function() {
+        sidebar.classList.remove('-translate-x-full');
+        sidebar.classList.add('translate-x-0');
+        mobileOverlay.classList.remove('hidden');
+      });
+      
+      closeSidebarBtn.addEventListener('click', function() {
+        sidebar.classList.remove('translate-x-0');
+        sidebar.classList.add('-translate-x-full');
+        mobileOverlay.classList.add('hidden');
+      });
+      
+      mobileOverlay.addEventListener('click', function() {
+        sidebar.classList.remove('translate-x-0');
+        sidebar.classList.add('-translate-x-full');
+        mobileOverlay.classList.add('hidden');
+      });
+      
+      // Activate the first tab by default
+      navItems[0].click();
+    });
+  </script>
+</body>
+</html>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    .dashboard-transition {
+      transition: all 0.3s ease-in-out;
+    }
+    
+    .progress-bar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      border-radius: 9999px;
+      transition: width 0.5s ease-in-out;
+    }
+    
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    @media (min-width: 1024px) {
+      .lg\:dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <div class="min-h-screen flex">
+    <!-- Mobile Sidebar Overlay -->
+    <div id="mobileOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden"></div>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="fixed left-0 top-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 -translate-x-full lg:translate-x-0 lg:static lg:h-screen dashboard-transition">
+      <div class="p-6 border-b border-gray-200">
+        <div class="flex items-center justify-between">
+          <h1 class="text-xl font-bold text-gray-900">UN SKILLS</h1>
+          <button id="closeSidebar" class="lg:hidden p-1 rounded-lg hover:bg-gray-100">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div class="mt-4 flex items-center space-x-3">
+          <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
+            A
+          </div>
+          <div>
+            <p class="font-medium text-gray-900">Amar Deka</p>
+            <p class="text-sm text-gray-600">Student</p>
+          </div>
+        </div>
+      </div>
+
+      <nav class="p-4 space-y-2">
+        <button data-tab="overview" class="w-full flex items-center justify-between px-4 py-3 rounded-lg transition-colors bg-blue-500 text-white nav-item">
+          <div class="flex items-center space-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 3v18h18"></path>
+              <path d="M19 9V3h-6"></path>
+              <path d="M15 15V3H9"></path>
+              <path d="M9 21H3V9"></path>
+            </svg>
+            <span class="font-medium">Overview</span>
+          </div>
+        </button>
+        
+        <button data-tab="courses" class="w-full flex items-center justify-between px-4 py-3 rounded-lg transition-colors text-gray-600 hover:bg-gray-100 nav-item">
+          <div class="flex items-center space-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            <span class="font-medium">My Courses</span>
+          </div>
+          <span class="px-2 py-1 rounded-full text-xs bg-gray-200 text-gray-600">4</span>
+        </button>
+        
+        <button data-tab="tasks" class="w-full flex items-center justify-between px-4 py-3 rounded-lg transition-colors text-gray-600 hover:bg-gray-100 nav-item">
+          <div class="flex items-center space-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span class="font-medium">Today's Tasks</span>
+          </div>
+          <span class="px-2 py-1 rounded-full text-xs bg-gray-200 text-gray-600">3</span>
+        </button>
+        
+        <button data-tab="assignments" class="w-full flex items-center justify-between px-4 py-3 rounded-lg transition-colors text-gray-600 hover:bg-gray-100 nav-item">
+          <div class="flex items-center space-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            <span class="font-medium">Assignments</span>
+          </div>
+          <span class="px-2 py-1 rounded-full text-xs bg-gray-200 text-gray-600">2</span>
+        </button>
+        
+        <button data-tab="performance" class="w-full flex items-center justify-between px-4 py-3 rounded-lg transition-colors text-gray-600 hover:bg-gray-100 nav-item">
+          <div class="flex items-center space-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+            <span class="font-medium">Performance</span>
+          </div>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="lg:ml-64 flex-1">
+      <!-- Header -->
+      <header class="bg-white border-b border-gray-200 px-6 py-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-4">
+            <button id="openSidebar" class="lg:hidden p-2 rounded-lg hover:bg-gray-100">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+              </svg>
+            </button>
+            <div>
+              <h2 id="headerTitle" class="text-xl font-semibold text-gray-900">Dashboard Overview</h2>
+              <p id="currentDate" class="text-sm text-gray-600">Wednesday, January 1, 2025</p>
+            </div>
+          </div>
+          
+          <div class="flex items-center space-x-4">
+            <div class="relative hidden md:block">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input
+                type="text"
+                placeholder="Search courses, assignments..."
+                class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            <button class="relative p-2 rounded-lg hover:bg-gray-100">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+              <span class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">3</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <main class="p-6">
+        <!-- Overview Tab Content -->
+        <div id="overviewContent" class="space-y-6 tab-content">
+          <!-- Stats Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Active Courses Card -->
+            <div class="bg-white rounded-xl p-6 border border-gray-200">
+              <div class="flex items-center justify-between mb-4">
+                <div class="p-3 rounded-lg bg-blue-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                  </svg>
+                </div>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-1">4</h3>
+              <p class="text-sm text-gray-600">Active Courses</p>
+            </div>
+            
+            <!-- Completion Rate Card -->
+            <div class="bg-white rounded-xl p-6 border border-gray-200">
+              <div class="flex items-center justify-between mb-4">
+                <div class="p-3 rounded-lg bg-green-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M16 8s-4-4-8-4-8 4-8 4"></path>
+                  </svg>
+                </div>
+                <span class="text-sm font-medium text-green-600">+5%</span>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-1">68%</h3>
+              <p class="text-sm text-gray-600">Completion Rate</p>
+            </div>
+            
+            <!-- Learning Hours Card -->
+            <div class="bg-white rounded-xl p-6 border border-gray-200">
+              <div class="flex items-center justify-between mb-4">
+                <div class="p-3 rounded-lg bg-purple-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 15 15"></polyline>
+                  </svg>
+                </div>
+                <span class="text-sm font-medium text-green-600">+12%</span>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-1">142</h3>
+              <p class="text-sm text-gray-600">Learning Hours</p>
+            </div>
+            
+            <!-- Certificates Card -->
+            <div class="bg-white rounded-xl p-6 border border-gray-200">
+              <div class="flex items-center justify-between mb-4">
+                <div class="p-3 rounded-lg bg-orange-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
+                    <circle cx="12" cy="8" r="7"></circle>
+                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                  </svg>
+                </div>
+                <span class="text-sm font-medium text-green-600">+1%</span>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-1">3</h3>
+              <p class="text-sm text-gray-600">Certificates</p>
+            </div>
+          </div>
+
+          <!-- Quick Actions & Recent Activity -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2">
+              <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Courses</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Course Card 1 -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                  <div class="flex items-start justify-between mb-4">
+                    <div class="flex-1">
+                      <h3 class="font-semibold text-gray-900 mb-1">React.js Development</h3>
+                      <p class="text-sm text-gray-600">by Dr. Sarah Chen</p>
+                    </div>
+                    <div class="w-3 h-3 rounded-full bg-blue-500"></div>
+                  </div>
+                  
+                  <div class="mb-4">
+                    <div class="flex justify-between text-sm text-gray-600 mb-2">
+                      <span>18/24 lessons</span>
+                      <span>75%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                      <div class="h-2 rounded-full bg-blue-500" style="width: 75%"></div>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <p class="text-xs text-gray-500 mb-1">Next:</p>
+                      <p class="text-sm font-medium text-gray-900">State Management with Redux</p>
+                    </div>
+                    <button class="flex items-center space-x-1 bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                      </svg>
+                      <span class="text-sm">Continue</span>
+                    </button>
+                  </div>
+                </div>
+                
+                <!-- Course Card 2 -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                  <div class="flex items-start justify-between mb-4">
+                    <div class="flex-1">
+                      <h3 class="font-semibold text-gray-900 mb-1">Data Structures & Algorithms</h3>
+                      <p class="text-sm text-gray-600">by Prof. Michael Johnson</p>
+                    </div>
+                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                  </div>
+                  
+                  <div class="mb-4">
+                    <div class="flex justify-between text-sm text-gray-600 mb-2">
+                      <span>13/30 lessons</span>
+                      <span>45%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                      <div class="h-2 rounded-full bg-green-500" style="width: 45%"></div>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <p class="text-xs text-gray-500 mb-1">Next:</p>
+                      <p class="text-sm font-medium text-gray-900">Binary Search Trees</p>
+                    </div>
+                    <button class="flex items-center space-x-1 bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                      </svg>
+                      <span class="text-sm">Continue</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="">
+              <h3 class="text-lg font-semibold text-gray-900 mb-4">Upcoming Tasks</h3>
+              <div class="space-y-3">
+                <!-- Task Item 1 -->
+                <div class="flex items-center space-x-4 p-4 bg-white rounded-lg border border-gray-200 hover:shadow-sm transition-shadow">
+                  <div class="p-2 rounded-lg text-blue-600 bg-blue-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                  </div>
+                  <div class="flex-1">
+                    <h4 class="font-medium text-gray-900">Live Session: Advanced React Hooks</h4>
+                    <p class="text-sm text-gray-600">React.js Development</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-sm font-medium text-gray-900">10:00 AM</p>
+                    <span class="inline-block px-2 py-1 rounded-full text-xs font-medium text-blue-600 bg-blue-100">upcoming</span>
+                  </div>
+                </div>
+                
+                <!-- Task Item 2 -->
+                <div class="flex items-center space-x-4 p-4 bg-white rounded-lg border border-gray-200 hover:shadow-sm transition-shadow">
+                  <div class="p-2 rounded-lg text-orange-600 bg-orange-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                      <line x1="16" y1="13" x2="8" y2="13"></line>
+                      <line x1="16" y1="17" x2="8" y2="17"></line>
+                      <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                  </div>
+                  <div class="flex-1">
+                    <h4 class="font-medium text-gray-900">Build a Todo App Component</h4>
+                    <p class="text-sm text-gray-600">React.js Development</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-sm font-medium text-gray-900">11:59 PM</p>
+                    <span class="inline-block px-2 py-1 rounded-full text-xs font-medium text-orange-600 bg-orange-100">pending</span>
+                  </div>
+                </div>
+                
+                <!-- Task Item 3 -->
+                <div class="flex items-center space-x-4 p-4 bg-white rounded-lg border border-gray-200 hover:shadow-sm transition-shadow">
+                  <div class="p-2 rounded-lg text-orange-600 bg-orange-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <path d="M16 8s-4-4-8-4-8 4-8 4"></path>
+                    </svg>
+                  </div>
+                  <div class="flex-1">
+                    <h4 class="font-medium text-gray-900">Arrays and Linked Lists Quiz</h4>
+                    <p class="text-sm text-gray-600">Data Structures & Algorithms</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-sm font-medium text-gray-900">6:00 PM</p>
+                    <span class="inline-block px-2 py-1 rounded-full text-xs font-medium text-orange-600 bg-orange-100">pending</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Courses Tab Content -->
+        <div id="coursesContent" class="grid grid-cols-1 md:grid-cols-2 gap-6 tab-content hidden">
+          <!-- Course Card 1 -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex-1">
+                <h3 class="font-semibold text-gray-900 mb-1">React.js Development</h3>
+                <p class="text-sm text-gray-600">by Dr. Sarah Chen</p>
+              </div>
+              <div class="w-3 h-3 rounded-full bg-blue-500"></div>
+            </div>
+            
+            <div class="mb-4">
+              <div class="flex justify-between text-sm text-gray-600 mb-2">
+                <span>18/24 lessons</span>
+                <span>75%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="h-2 rounded-full bg-blue-500" style="width: 75%"></div>
+              </div>
+            </div>
+            
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-xs text-gray-500 mb-1">Next:</p>
+                <p class="text-sm font-medium text-gray-900">State Management with Redux</p>
+              </div>
+              <button class="flex items-center space-x-1 bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span class="text-sm">Continue</span>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Course Card 2 -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex-1">
+                <h3 class="font-semibold text-gray-900 mb-1">Data Structures & Algorithms</h3>
+                <p class="text-sm text-gray-600">by Prof. Michael Johnson</p>
+              </div>
+              <div class="w-3 h-3 rounded-full bg-green-500"></div>
+            </div>
+            
+            <div class="mb-4">
+              <div class="flex justify-between text-sm text-gray-600 mb-2">
+                <span>13/30 lessons</span>
+                <span>45%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="h-2 rounded-full bg-green-500" style="width: 45%"></div>
+              </div>
+            </div>
+            
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-xs text-gray-500 mb-1">Next:</p>
+                <p class="text-sm font-medium text-gray-900">Binary Search Trees</p>
+              </div>
+              <button class="flex items-center space-x-1 bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span class="text-sm">Continue</span>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Course Card 3 -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex-1">
+                <h3 class="font-semibold text-gray-900 mb-1">UI/UX Design Principles</h3>
+                <p class="text-sm text-gray-600">by Emma Rodriguez</p>
+              </div>
+              <div class="w-3 h-3 rounded-full bg-purple-500"></div>
+            </div>
+            
+            <div class="mb-4">
+              <div class="flex justify-between text-sm text-gray-600 mb-2">
+                <span>14/16 lessons</span>
+                <span>90%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="h-2 rounded-full bg-purple-500" style="width: 90%"></div>
+              </div>
+            </div>
+            
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-xs text-gray-500 mb-1">Next:</p>
+                <p class="text-sm font-medium text-gray-900">Design Systems</p>
+              </div>
+              <button class="flex items-center space-x-1 bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span class="text-sm">Continue</span>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Course Card 4 -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex-1">
+                <h3 class="font-semibold text-gray-900 mb-1">Machine Learning Basics</h3>
+                <p class="text-sm text-gray-600">by Dr. Raj Patel</p>
+              </div>
+              <div class="w-3 h-3 rounded-full bg-orange-500"></div>
+            </div>
+            
+            <div class="mb-4">
+              <div class="flex justify-between text-sm text-gray-600 mb-2">
+                <span>8/28 lessons</span>
+                <span>30%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="h-2 rounded-full bg-orange-500" style="width: 30%"></div>
+              </div>
+            </div>
+            
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-xs text-gray-500 mb-1">Next:</p>
+                <p class="text-sm font-medium text-gray-900">Linear Regression</p>
+              </div>
+              <button class="flex items-center space-x-1 bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span class="text-sm">Continue</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tasks Tab Content -->
+        <div id="tasksContent" class="space-y-4 tab-content hidden">
+          <!-- Task Item 1 -->
+          <div class="flex items-center space-x-4 p-4 bg-white rounded-lg border border-gray-200 hover:shadow-sm transition-shadow">
+            <div class="p-2 rounded-lg text-blue-600 bg-blue-100">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-medium text-gray-900">Live Session: Advanced React Hooks</h4>
+              <p class="text-sm text-gray-600">React.js Development</p>
+            </div>
+            <div class="text-right">
+              <p class="text-sm font-medium text-gray-900">10:00 AM</p>
+              <span class="inline-block px-2 py-1 rounded-full text-xs font-medium text-blue-600 bg-blue-100">upcoming</span>
+            </div>
+          </div>
+          
+          <!-- Task Item 2 -->
+          <div class="flex items-center space-x-4 p-4 bg-white rounded-lg border border-gray-200 hover:shadow-sm transition-shadow">
+            <div class="p-2 rounded-lg text-orange-600 bg-orange-100">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-medium text-gray-900">Build a Todo App Component</h4>
+              <p class="text-sm text-gray-600">React.js Development</p>
+            </div>
+            <div class="text-right">
+              <p class="text-sm font-medium text-gray-900">11:59 PM</p>
+              <span class="inline-block px-2 py-1 rounded-full text-xs font-medium text-orange-600 bg-orange-100">pending</span>
+            </div>
+          </div>
+          
+          <!-- Task Item 3 -->
+          <div class="flex items-center space-x-4 p-4 bg-white rounded-lg border border-gray-200 hover:shadow-sm transition-shadow">
+            <div class="p-2 rounded-lg text-orange-600 bg-orange-100">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M16 8s-4-4-8-4-8 4-8 4"></path>
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-medium text-gray-900">Arrays and Linked Lists Quiz</h4>
+              <p class="text-sm text-gray-600">Data Structures & Algorithms</p>
+            </div>
+            <div class="text-right">
+              <p class="text-sm font-medium text-gray-900">6:00 PM</p>
+              <span class="inline-block px-2 py-1 rounded-full text-xs font-medium text-orange-600 bg-orange-100">pending</span>
+            </div>
+          </div>
+          
+          <!-- Task Item 4 -->
+          <div class="flex items-center space-x-4 p-4 bg-white rounded-lg border border-gray-200 hover:shadow-sm transition-shadow">
+            <div class="p-2 rounded-lg text-green-600 bg-green-100">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-medium text-gray-900">Design Critique Session</h4>
+              <p class="text-sm text-gray-600">UI/UX Design Principles</p>
+            </div>
+            <div class="text-right">
+              <p class="text-sm font-medium text-gray-900">2:00 PM</p>
+              <span class="inline-block px-2 py-1 rounded-full text-xs font-medium text-green-600 bg-green-100">completed</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Assignments Tab Content -->
+        <div id="assignmentsContent" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 tab-content hidden">
+          <!-- Assignment Card 1 -->
+          <div class="bg-white rounded-lg border border-gray-200 p-4">
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h4 class="font-medium text-gray-900">E-commerce Website Design</h4>
+                <p class="text-sm text-gray-600">UI/UX Design Principles</p>
+              </div>
+              <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">submitted</span>
+            </div>
+            
+            <div class="flex items-center justify-between">
+              <div class="text-sm text-gray-600">
+                Due: 7/5/2025
+              </div>
+              <div class="font-semibold text-green-600">A-</div>
+            </div>
+          </div>
+          
+          <!-- Assignment Card 2 -->
+          <div class="bg-white rounded-lg border border-gray-200 p-4">
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h4 class="font-medium text-gray-900">Sorting Algorithm Implementation</h4>
+                <p class="text-sm text-gray-600">Data Structures & Algorithms</p>
+              </div>
+              <span class="px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-700">pending</span>
+            </div>
+            
+            <div class="flex items-center justify-between">
+              <div class="text-sm text-gray-600">
+                Due: 7/3/2025
+              </div>
+              <button class="flex items-center space-x-1 text-blue-600 hover:text-blue-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <span class="text-sm">Submit</span>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Assignment Card 3 -->
+          <div class="bg-white rounded-lg border border-gray-200 p-4">
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h4 class="font-medium text-gray-900">React Portfolio Project</h4>
+                <p class="text-sm text-gray-600">React.js Development</p>
+              </div>
+              <span class="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">in-progress</span>
+            </div>
+            
+            <div class="flex items-center justify-between">
+              <div class="text-sm text-gray-600">
+                Due: 7/8/2025
+              </div>
+              <button class="flex items-center space-x-1 text-blue-600 hover:text-blue-700">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <span class="text-sm">Submit</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Performance Tab Content -->
+        <div id="performanceContent" class="space-y-6 tab-content hidden">
+          <!-- Performance Stats -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white rounded-xl p-6 border border-gray-200 text-center">
+              <div class="text-3xl font-bold text-blue-600 mb-2">B+</div>
+              <p class="text-gray-600">Overall Grade</p>
+            </div>
+            <div class="bg-white rounded-xl p-6 border border-gray-200 text-center">
+              <div class="text-3xl font-bold text-green-600 mb-2">12</div>
+              <p class="text-gray-600">Day Streak</p>
+            </div>
+            <div class="bg-white rounded-xl p-6 border border-gray-200 text-center">
+              <div class="text-3xl font-bold text-purple-600 mb-2">142</div>
+              <p class="text-gray-600">Total Hours</p>
+            </div>
+          </div>
+
+          <!-- Achievements -->
+          <div class="bg-white rounded-xl p-6 border border-gray-200">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Achievements</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg">
+                <div class="text-2xl">⚡</div>
+                <div>
+                  <h4 class="font-medium text-gray-900">Quick Learner</h4>
+                  <p class="text-sm text-gray-600">Completed 5 lessons in a day</p>
+                </div>
+              </div>
+              
+              <div class="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg">
+                <div class="text-2xl">🔥</div>
+                <div>
+                  <h4 class="font-medium text-gray-900">Consistent Student</h4>
+                  <p class="text-sm text-gray-600">7-day learning streak</p>
+                </div>
+              </div>
+              
+              <div class="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg">
+                <div class="text-2xl">🏆</div>
+                <div>
+                  <h4 class="font-medium text-gray-900">Top Performer</h4>
+                  <p class="text-sm text-gray-600">Scored 95%+ on 3 quizzes</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Update current date
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', options);
+      
+      // Tab switching functionality
+      const navItems = document.querySelectorAll('.nav-item');
+      const tabContents = document.querySelectorAll('.tab-content');
+      
+      navItems.forEach(item => {
+        item.addEventListener('click', function() {
+          const tabKey = this.getAttribute('data-tab');
+          
+          // Update active tab styling
+          navItems.forEach(navItem => {
+            if (navItem.getAttribute('data-tab') === tabKey) {
+              navItem.classList.remove('text-gray-600', 'hover:bg-gray-100');
+              navItem.classList.add('bg-blue-500', 'text-white');
+            } else {
+              navItem.classList.remove('bg-blue-500', 'text-white');
+              navItem.classList.add('text-gray-600', 'hover:bg-gray-100');
+            }
+          });
+          
+          // Show/hide tab content
+          tabContents.forEach(content => {
+            if (content.id === `${tabKey}Content`) {
+              content.classList.remove('hidden');
+            } else {
+              content.classList.add('hidden');
+            }
+          });
+          
+          // Update header title
+          let titleText = '';
+          switch(tabKey) {
+            case 'overview':
+              titleText = 'Dashboard Overview';
+              break;
+            case 'courses':
+              titleText = 'My Courses';
+              break;
+            case 'tasks':
+              titleText = "Today's Tasks";
+              break;
+            case 'assignments':
+              titleText = 'Assignments';
+              break;
+            case 'performance':
+              titleText = 'Performance Analytics';
+              break;
+          }
+          document.getElementById('headerTitle').textContent = titleText;
+        });
+      });
+      
+      // Mobile sidebar toggle
+      const mobileOverlay = document.getElementById('mobileOverlay');
+      const sidebar = document.getElementById('sidebar');
+      const openSidebarBtn = document.getElementById('openSidebar');
+      const closeSidebarBtn = document.getElementById('closeSidebar');
+      
+      openSidebarBtn.addEventListener('click', function() {
+        sidebar.classList.remove('-translate-x-full');
+        sidebar.classList.add('translate-x-0');
+        mobileOverlay.classList.remove('hidden');
+      });
+      
+      closeSidebarBtn.addEventListener('click', function() {
+        sidebar.classList.remove('translate-x-0');
+        sidebar.classList.add('-translate-x-full');
+        mobileOverlay.classList.add('hidden');
+      });
+      
+      mobileOverlay.addEventListener('click', function() {
+        sidebar.classList.remove('translate-x-0');
+        sidebar.classList.add('-translate-x-full');
+        mobileOverlay.classList.add('hidden');
+      });
+      
+      // Activate the first tab by default
+      navItems[0].click();
+    });
+  </script>
+</body>
+</html>
+>>>>>>> b8ccac691cf14dd7fffafa5cd1e3fc01fa025d0a
