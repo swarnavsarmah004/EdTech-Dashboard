@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-# Dashboard
-SKILL
-=======
+
 📚 EdTech Dashboard
 🚀 Project Overview
 This is a responsive EdTech Student Dashboard built with HTML, Tailwind CSS, and Vanilla JavaScript.
@@ -57,4 +54,4 @@ https://ed-tech-dashboard.vercel.app/
 🏷️ Author
 Swarnav Sarmah
 GitHub: @swarnavsarmah004
->>>>>>> 666cba925e8fb9ba1a9e31f13b3e05efb13d344b
+
