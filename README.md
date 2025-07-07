@@ -44,6 +44,8 @@ Explore each tab: Overview, Courses, Tasks, Assignments, and Performance.
 
 Sidebar works on mobile and desktop.
 
+📥 Google Drive Link
+https://drive.google.com/drive/folders/1BvT4G2cH3PhHKrjjOwkQdFtjPispBUTZ?usp=sharing
 
 🔗 Live Demo
 https://ed-tech-dashboard.vercel.app/
